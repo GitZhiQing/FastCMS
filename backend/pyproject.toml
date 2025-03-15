@@ -1,0 +1,61 @@
+[project]
+name = "FastCMS"
+version = "0.0.1"
+description = "FastCMS Web API"
+authors = [{ name = "QING", email = "qlear@qq.com" }]
+requires-python = ">=3.12,<4.0"
+dependencies = [
+    "aiosqlite>=0.21.0",     # Async SQLite
+    "bcrypt>=4.2.1",         # Password hashing
+    "fastapi[all]>=0.115.8", # Web framework
+    "loguru>=0.7.3",         # Logging
+    "python-jose>=3.4.0",    # JSON Web Tokens
+    "sqlalchemy>=2.0.38",    # ORM
+    "ujson>=5.10.0",         # high-performance JSON encoder and decoder
+]
+
+[dependency-groups] # uv add <package_name> --dev
+dev = ["pytest>=8.3.4", "ruff>=0.9.5"]
+
+[[tool.uv.index]]
+url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple"
+default = true
+
+[tool.ruff]
+exclude = [
+    ".venv",
+    ".idea",
+    ".vscode",
+    ".uv_cache",
+    ".ruff_cache",
+    ".pytest_cache",
+    "__pycache__",
+]
+target-version = "py312"
+line-length = 120
+indent-width = 4
+
+[tool.ruff.lint]
+select = [
+    "E",      # pycodestyle errors
+    "W",      # pycodestyle warnings
+    "F",      # pyflakes
+    "I",      # isort
+    "B",      # flake8-bugbear
+    "C4",     # flake8-comprehensions
+    "UP",     # pyupgrade
+    "ARG001", # unused arguments in functions
+]
+ignore = [
+    "B008", # do not perform function calls in argument defaults
+    "W191", # indentation contains tabs
+    "B904", # Allow raising exceptions without from e, for HTTPException
+]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+[tool.ruff.lint.pyupgrade]
+# Preserve types, even if a file imports `from __future__ import annotations`.
+keep-runtime-typing = true

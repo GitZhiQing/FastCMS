@@ -1,0 +1,15 @@
+# IDE
+.idea/
+.vscode/
+
+# venv
+.venv/
+
+# data
+data/
+
+# cache
+.uv_cache/
+.ruff_cache/
+.pytest_cache/
+__pycache__/
