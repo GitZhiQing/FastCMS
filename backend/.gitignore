@@ -17,3 +17,6 @@ uv.lock
 
 # tmp
 tmp/
+
+# secrets
+.env
