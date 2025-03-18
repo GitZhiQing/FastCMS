@@ -8,8 +8,9 @@ class UserCreate(BaseModel):
 
 
 class UserUpdate(BaseModel):
-    username: str
-    email: EmailStr
+    username: str | None = None
+    email: EmailStr | None = None
+    avatar: str | None = None
 
 
 class UserEmailLogin(BaseModel):

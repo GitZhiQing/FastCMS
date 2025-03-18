@@ -5,10 +5,12 @@ description = "FastCMS Web API"
 authors = [{ name = "QING", email = "qlear@qq.com" }]
 requires-python = ">=3.12,<4.0"
 dependencies = [
+    "aiofiles>=24.1.0",      # Async File
     "aiosqlite>=0.21.0",     # Async SQLite
     "bcrypt>=4.2.1",         # Password hashing
     "fastapi[all]>=0.115.8", # Web framework
     "loguru>=0.7.3",         # Logging
+    "pillow>=11.1.0",        # Imaging Library
     "python-jose>=3.4.0",    # JSON Web Tokens
     "sqlalchemy>=2.0.38",    # ORM
     "ujson>=5.10.0",         # high-performance JSON encoder and decoder
