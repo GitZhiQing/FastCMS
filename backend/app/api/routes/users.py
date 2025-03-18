@@ -18,8 +18,8 @@ router = APIRouter()
 @router.get("", response_model=PaginatedResponse[UserResp])
 async def read_user_list(
     session: session_dep,
-    page: Annotated[int, Query(ge=1, description="页码", example=1)] = 1,
-    per_page: Annotated[int, Query(ge=1, le=100, description="每页数量", example=20)] = 20,
+    page: Annotated[int, Query(ge=1, description="页码")] = 1,
+    per_page: Annotated[int, Query(ge=1, le=100, description="每页数量")] = 20,
 ) -> PaginatedResponse[UserResp]:
     """获取用户列表"""
     skip = (page - 1) * per_page
@@ -33,7 +33,7 @@ async def read_user_list(
 
 
 @router.get("/{id}", response_model=UserResp)
-async def read_user(session: session_dep, id: Annotated[int, Path(ge=1, description="用户 ID", example=1)]) -> UserResp:
+async def read_user(session: session_dep, id: Annotated[int, Path(ge=1, description="用户 ID")]) -> UserResp:
     """通过用户 ID 获取用户信息"""
     user = await crud.get_user(session=session, id=id)
     if user is None:
@@ -43,7 +43,7 @@ async def read_user(session: session_dep, id: Annotated[int, Path(ge=1, descript
 
 @router.get("/email/{email}", response_model=UserResp)
 async def read_user_by_email(
-    session: session_dep, email: Annotated[EmailStr, Path(description="用户邮箱", example="seeker@example.com")]
+    session: session_dep, email: Annotated[EmailStr, Path(description="用户邮箱")]
 ) -> UserResp:
     """通过邮箱获取用户信息"""
     user = await crud.get_user_by_email(session=session, email=email)
@@ -53,9 +53,7 @@ async def read_user_by_email(
 
 
 @router.get("/username/{username}", response_model=UserResp)
-async def read_user_by_username(
-    session: session_dep, username: Annotated[str, Path(description="用户名", example="Seeker")]
-) -> UserResp:
+async def read_user_by_username(session: session_dep, username: Annotated[str, Path(description="用户名")]) -> UserResp:
     """通过邮箱获取用户信息"""
     user = await crud.get_user_by_username(session=session, username=username)
     if user is None:
@@ -82,7 +80,7 @@ async def update_user(
     session: session_dep,
     user_update: UserUpdate,
     current_user: current_user_dep,
-    id: Annotated[int, Path(ge=1, description="用户 ID", example=1)],
+    id: Annotated[int, Path(ge=1, description="用户 ID")],
 ) -> UserResp:
     """更新用户"""
     if user_update.username or user_update.email:
@@ -104,7 +102,7 @@ async def update_user(
 async def update_user_avatar(
     session: session_dep,
     current_user: current_user_dep,
-    id: Annotated[int, Path(ge=1, description="用户 ID", example=1)],
+    id: Annotated[int, Path(ge=1, description="用户 ID")],
     avatar: UploadFile = File(...),
 ) -> UserResp:
     if id != current_user.id:

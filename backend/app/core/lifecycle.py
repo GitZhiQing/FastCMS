@@ -117,7 +117,7 @@ async def create_test_user():
                 session.add(test_super_admin)
                 test_admin = User(
                     username="test_admin",
-                    email="admin@seek2.team",
+                    email="test_admin@seek2.team",
                     hashed_password=get_password_hash("123456"),
                     power=2,
                 )
