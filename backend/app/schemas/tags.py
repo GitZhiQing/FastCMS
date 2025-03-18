@@ -9,7 +9,7 @@ class TagUpdate(BaseModel):
     name: str
 
 
-class PostResponse(BaseModel):
+class PostResp(BaseModel):
     id: int
     title: str
     content: str
@@ -21,8 +21,8 @@ class PostResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
 
-class TagResponse(BaseModel):
+class TagResp(BaseModel):
     id: int
     name: str
-    posts: list[PostResponse] = []
+    posts: list[PostResp] = []
     model_config = ConfigDict(from_attributes=True)

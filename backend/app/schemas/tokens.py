@@ -1,13 +1,11 @@
-from typing import Literal
-
 from pydantic import BaseModel
 
 
+class AccessToken(BaseModel):
+    access_token: str
+    token_type: str
+
+
 class TokenData(BaseModel):
-    uid: int
+    id: int
     power: int
-
-
-class Token(BaseModel):
-    token: str
-    token_type: Literal["access_token", "refresh_token"]

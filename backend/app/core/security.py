@@ -22,7 +22,7 @@ def get_password_hash(password: str) -> str:
     return bcrypt.hashpw(password.encode("utf-8"), salt).decode("utf-8")
 
 
-async def create_access_token(
+def create_access_token(
     data: dict[str, Any],
     expires_delta: timedelta = timedelta(seconds=settings.ACCESS_TOKEN_EXPIRE_SECONDS),
 ) -> str:
@@ -34,7 +34,7 @@ async def create_access_token(
     return encoded_jwt
 
 
-async def create_refresh_token(
+def create_refresh_token(
     data: dict[str, Any],
     expires_delta: timedelta = timedelta(seconds=settings.REFRESH_TOKEN_EXPIRE_SECONDS),
 ) -> str:
@@ -46,14 +46,14 @@ async def create_refresh_token(
     return encoded_jwt
 
 
-async def verify_token(token: str) -> TokenData | None:
+def verify_token(token: str) -> TokenData | None:
     """验证令牌"""
     try:
         payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[ALGORITHM])
-        uid: int = payload.get("sub")
+        id: int = payload.get("sub")
         power: int = payload.get("power")
-        if uid is None or power is None:
+        if id is None or power is None:
             return None
-        return TokenData(uid=uid, power=power)
+        return TokenData(id=id, power=power)
     except JWTError:
         return None

@@ -1,8 +1,8 @@
 from pydantic import EmailStr
-from sqlalchemy import select, update
+from sqlalchemy import func, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core.security import get_password_hash
+from app.core.security import get_password_hash, verify_password
 from app.models.users import User
 from app.schemas.users import UserCreate, UserUpdate
 
@@ -47,7 +47,28 @@ async def get_user_by_username(*, session: AsyncSession, username: str) -> User 
     return result.scalars().first()
 
 
+async def get_user_by_username_or_email(*, session: AsyncSession, username_or_email: str) -> User | None:
+    async with session.begin():
+        result = await session.execute(
+            select(User).where((User.username == username_or_email) | (User.email == username_or_email))
+        )
+    return result.scalars().first()
+
+
+async def get_user_count(*, session: AsyncSession) -> int:
+    async with session.begin():
+        result = await session.execute(select(func.count(User.id)))
+    return result.scalar()
+
+
 async def get_user_list(*, session: AsyncSession, skip: int = 0, limit: int = 100) -> list[User]:
     async with session.begin():
         result = await session.execute(select(User).offset(skip).limit(limit))
     return result.scalars().all()
+
+
+async def authenticate_user(*, session: AsyncSession, username_or_email: str, password: str) -> User | None:
+    user = await get_user_by_username_or_email(session=session, username_or_email=username_or_email)
+    if user and verify_password(password, user.hashed_password):
+        return user
+    return None

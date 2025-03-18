@@ -15,7 +15,7 @@ class PostUpdate(BaseModel):
     tag_ids: list[int] | None = None
 
 
-class PostResponse(BaseModel):
+class PostResp(BaseModel):
     id: int
     title: str
     content: str
