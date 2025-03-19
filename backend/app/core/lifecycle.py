@@ -27,6 +27,7 @@ def folder_init():
 def folder_drop():
     """文件夹清理"""
     try:
+        # for path in [settings.DATA_DIR, settings.POST_IMAGES_DIR, settings.AVATAR_DIR]: # 数据库文件被其他进程占用错误
         for path in [settings.POST_IMAGES_DIR, settings.AVATAR_DIR]:
             if path.exists():
                 shutil.rmtree(path)

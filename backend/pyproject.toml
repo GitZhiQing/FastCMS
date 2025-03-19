@@ -64,3 +64,14 @@ keep-runtime-typing = true
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+markers = [
+    # 新的测试函数可用 `@pytest.mark.new_test` 标记
+    # 然后执行 `pytest -m new_test`, 此时只执行新的测试函数
+    "new_test: mark test for new features",
+    # 适用于 FastAPI 的 asyncio 测试标记
+    "anyio: anyio async tests",
+]
+addopts = [
+    "--showlocals", # 失败时显示局部变量
+    # "--durations=5", # 显示最慢的5个测试用例
+]
