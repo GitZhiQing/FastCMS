@@ -40,6 +40,7 @@ def create_app() -> FastAPI:
             "debug": settings.DEBUG,
             "host": settings.HOST,
             "port": settings.PORT,
+            "docs": app.docs_url,
         }
 
     app.include_router(api_router, prefix=settings.API_STR)
